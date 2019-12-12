@@ -50,6 +50,7 @@ export default class Post extends Component {
           <TouchableOpacity onPress={this.like.bind(this)}>
             <Image style={styles.botaoDeLike} source={this.carregaIcone(foto.likeada)} />
           </TouchableOpacity>
+          <Text style={styles.likes}>2 curtidas</Text>
         </View>
       </View>
     );
@@ -77,12 +78,17 @@ const styles = StyleSheet.create({
   },
 
   botaoDeLike: {
-    width: 40,
-    height: 40
+    width: 27,
+    height: 27,
+    marginBottom: 7
   },
 
   rodape: {
     margin: 10
+  },
+
+  likes: {
+    fontWeight: 'bold'    
   }
 
 });
