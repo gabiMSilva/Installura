@@ -17,17 +17,32 @@ export default class Post extends Component {
     this.state = { foto: this.props.foto }
   }
 
-  carregaIcone(likeada){
-    return likeada ? require('../../resources/img/s2-checked.png') : require('../../resources/img/s2.png');
-  }
-
   like(){
+    const { foto } = this.state;
+    let curtidas = [];
+
+    if(!foto.likeada){
+      curtidas = [
+        ...foto.likers,
+        {login: 'meuUsuario'}
+      ];
+    } else {
+      curtidas = foto.likers.filter(liker => {
+        return liker.login !== 'meuUsuario';
+      })
+    }
+
     const fotoAtualizada = {
-      ...this.state.foto,
-      likeada: !this.state.foto.likeada
+      ...foto,
+      likeada: !foto.likeada,
+      likers: curtidas
     };
   
     this.setState({foto: fotoAtualizada});
+  }
+
+  carregaIcone(likeada){
+    return likeada ? require('../../resources/img/s2-checked.png') : require('../../resources/img/s2.png');
   }
 
   exibeLegenda(foto) {
