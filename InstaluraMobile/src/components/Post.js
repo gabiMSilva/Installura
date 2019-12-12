@@ -30,6 +30,25 @@ export default class Post extends Component {
     this.setState({foto: fotoAtualizada});
   }
 
+  exibeLegenda(foto) {
+    if(foto.comentario == ''){
+      return;
+    }
+
+    return (
+      <View style={styles.comentario}>
+        <Text style={styles.tituloComentario}>{foto.loginUsuario}</Text>
+        <Text>{foto.comentario}</Text>
+      </View>
+    );
+  }
+
+  exibeLikes(likers) {
+    if(likers.length <= 0)
+      return;  
+    return (<Text style={styles.likes}>{likers.length} {likers.length > 1 ? 'curtidas': 'curtida'}</Text>);
+  }
+
   render() {
     const { foto } = this.state;
 
@@ -50,7 +69,8 @@ export default class Post extends Component {
           <TouchableOpacity onPress={this.like.bind(this)}>
             <Image style={styles.botaoDeLike} source={this.carregaIcone(foto.likeada)} />
           </TouchableOpacity>
-          <Text style={styles.likes}>2 curtidas</Text>
+          {this.exibeLikes(foto.likers)}
+          {this.exibeLegenda(foto)}
         </View>
       </View>
     );
@@ -68,8 +88,8 @@ const styles = StyleSheet.create({
   fotoDePerfil: {
     marginRight: 10, 
     borderRadius: 20, 
-    width: 40, 
-    height: 40
+    width: 30, 
+    height: 30
   },
 
   foto: {
@@ -88,7 +108,16 @@ const styles = StyleSheet.create({
   },
 
   likes: {
-    fontWeight: 'bold'    
-  }
+    fontWeight: 'bold',
+    marginBottom: 7
+  },
 
+  comentario: {
+    flexDirection: 'row',
+  },
+
+  tituloComentario: {
+    fontWeight: 'bold',
+    marginRight: 5
+  },
 });
