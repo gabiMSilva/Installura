@@ -9,48 +9,36 @@
 import React from 'react';
 import {
   StyleSheet,
-  Image,
-  Text,
-  View,
   Dimensions,
   FlatList,
 } from 'react-native';
 
+
 import {} from 'react-native/Libraries/NewAppScreen';
+import Post from './src/components/Post';
 
 const fotos = [
-  {id: 1, usuario: 'rafael'},
-  {id: 2, usuario: 'alberto'},
-  {id: 3, usuario: 'vitor'},
+  {id: 1, usuario: 'Gabriela'},
+  {id: 2, usuario: 'Herbert'},
+  {id: 3, usuario: 'Bruna'},
+  {id: 4, usuario: 'Raquel'},
 ];
 
-const width = Dimensions.get('screen').width;
 
 const App: () => React$Node = () => {
   return (
     <FlatList
-      style={styles.container}
-      data={fotos}
-      keyExtractor={item => item.id}
-      renderItem={({item}) => (
-        <View>
-          <View style={styles.cabecalho}>
-            <Image
-              source={require('./resources/img/alura.jpg')}
-              style={styles.fotoDePerfil}
-            />
-            <Text>{item.usuario}</Text>
-          </View>
-          <Image
-            source={require('./resources/img/alura.jpg')}
-            style={styles.foto}
-          />
-        </View>
+    style={styles.container}
+    data={fotos}
+    keyExtractor={item => item.id}
+    renderItem={({item}) => (
+      <Post foto={item}/>
       )}
-    />
-  );
-};
-
+      />
+      );
+    };
+    
+const width = Dimensions.get('screen').width;
 const styles = StyleSheet.create({
   container: {
     marginTop: 20,
