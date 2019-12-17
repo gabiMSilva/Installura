@@ -15,7 +15,7 @@ export default class Post extends Component {
   
   constructor(props) {
     super(props);
-    this.state = { foto: this.props.foto }
+    this.state = { foto: this.props.foto, valorComentario: '' }
   }
 
   like(){
@@ -59,6 +59,28 @@ export default class Post extends Component {
     );
   }
 
+  adicionaComentario() {
+    if(this.state.valorComentario === '')
+      return;
+
+    const novaLista = [
+      ...this.state.foto.comentarios,
+      {
+        id: this.state.valorComentario,
+        login: 'meuUsuario',
+        texto: this.state.valorComentario
+      }
+    ]
+
+    const fotoAtualizada = {
+      ...this.state.foto,
+      comentarios: novaLista
+    }
+
+    this.setState({foto: fotoAtualizada, valorComentario: ''});
+    this.inputComentario.clear();
+  }
+
   exibeLikes(likers) {
     if(likers.length <= 0)
       return;  
@@ -94,8 +116,15 @@ export default class Post extends Component {
             </View>
           )}
           <View style={styles.novoComentario}>
-            <TextInput style={styles.input} placeholder="Adicione um comentário..." underlineColorAndroid='transparent'/>
-            <Image style={styles.icone} source={ require('../../resources/img/send.png') } />
+            <TextInput 
+              style={styles.input} 
+              placeholder="Adicione um comentário..." 
+              ref={input => this.inputComentario = input} 
+              onChangeText={texto => this.setState({valorComentario: texto})}
+            />
+            <TouchableOpacity onPress={this.adicionaComentario.bind(this)}>
+              <Image style={styles.icone} source={ require('../../resources/img/send.png') } />
+            </TouchableOpacity>
           </View>
         </View>
       </View>
